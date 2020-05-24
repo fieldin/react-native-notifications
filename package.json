@@ -19,7 +19,7 @@
     "actionable-notifications",
     "interactive-notifications"
   ],
-  "main": "lib/dist/src/index.js",
+  "main": "lib/dist/src/index.ts",
   "typings": "lib/dist/index.d.ts",
   "scripts": {
     "build": "rm -rf ./lib/dist && tsc",
