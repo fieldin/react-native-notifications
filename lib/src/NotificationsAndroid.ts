@@ -3,25 +3,22 @@ import { Commands } from './commands/Commands';
 import { Platform } from 'react-native';
 import { NotificationChannel } from './interfaces/NotificationChannel';
 
-export class NotificationsAndroid {
-  constructor(private readonly commands: Commands) {
-    return new Proxy(this, {
-      get(target, name) {
-        if (Platform.OS === 'android') {
-          return (target as any)[name];
-        } else {
-          return () => {};
-        }
-      }
-    });
-  }
+Object.defineProperty(exports, "__esModule", { value: true });
+const react_native_1 = require("react-native");
 
-  /**
-  * Refresh FCM token
-  */
-  public registerRemoteNotifications() {
-    this.commands.refreshToken();
-  }
+export class NotificationsAndroid {
+   constructor(commands) {
+        this.commands = commands;
+    }
+
+    /**
+    * Refresh FCM token
+    */
+    registerRemoteNotifications() {
+        if (react_native_1.Platform.OS === 'android') {
+        this.commands.refreshToken();
+        }
+    }
 
   /**
    * setNotificationChannel
