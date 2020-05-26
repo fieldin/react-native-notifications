@@ -4,88 +4,114 @@ import { Commands } from './commands/Commands';
 import { Platform } from 'react-native';
 import { EventsRegistryIOS } from './events/EventsRegistryIOS';
 
+Object.defineProperty(exports, "__esModule", { value: true });
+const react_native_1 = require("react-native");
+
+
 export class NotificationsIOS {
-  constructor(private readonly commands: Commands, private readonly eventsRegistry: EventsRegistryIOS) {
-    return new Proxy(this, {
-      get(target, name) {
-        if (Platform.OS === 'ios') {
-          return (target as any)[name];
-        } else {
-          return () => {};
+   constructor(commands, eventsRegistry) {
+        this.commands = commands;
+        this.eventsRegistry = eventsRegistry;
+    }
+
+    /**
+    * Request permissions to send remote notifications
+    */
+    registerRemoteNotifications() {
+        if (react_native_1.Platform.OS === 'ios') {
+            return this.commands.requestPermissions();
         }
-      }
-    });
-  }
+        return {};
+    }
 
-  /**
-  * Request permissions to send remote notifications
-  */
-  public registerRemoteNotifications() {
-    return this.commands.requestPermissions();
-  }
+    /**
+    * Unregister for all remote notifications received via Apple Push Notification service
+    */
+    abandonPermissions() {
+        if (react_native_1.Platform.OS === 'ios') {
+            return this.commands.abandonPermissions();
+        }
+        return {};
+    }
 
-  /**
-  * Unregister for all remote notifications received via Apple Push Notification service
-  */
-  public abandonPermissions() {
-    return this.commands.abandonPermissions();
-  }
+    /**
+    * registerPushKit
+    */
+    registerPushKit() {
+        if (react_native_1.Platform.OS === 'ios') {
+            return this.commands.registerPushKit();
+        }
+        return {};
+    }
 
-  /**
- * registerPushKit
- */
-  public registerPushKit() {
-    return this.commands.registerPushKit();
-  }
+    /**
+    * getBadgeCount
+    */
+    getBadgeCount() {
+        if (react_native_1.Platform.OS === 'ios') {
+            return this.commands.getBadgeCount();
+        }
+        return {};
+    }
 
-  /**
-   * getBadgeCount
-   */
-  public getBadgeCount(): Promise<number> {
-    return this.commands.getBadgeCount();
-  }
+    /**
+    * setBadgeCount
+    * @param count number of the new badge count
+    */
+    setBadgeCount(count) {
+        if (react_native_1.Platform.OS === 'ios') {
+            return this.commands.setBadgeCount(count);
+        }
+        return {};
+    }
 
-  /**
-   * setBadgeCount
-   * @param count number of the new badge count
-   */
-  public setBadgeCount(count: number) {
-    return this.commands.setBadgeCount(count);
-  }
+    /**
+    * cancelAllLocalNotifications
+    */
+    cancelAllLocalNotifications() {
+        if (react_native_1.Platform.OS === 'ios') {
+            this.commands.cancelAllLocalNotifications();
+        }
+    }
 
-  /**
-   * cancelAllLocalNotifications
-   */
-  public cancelAllLocalNotifications() {
-    this.commands.cancelAllLocalNotifications();
-  }
+    /**
+    * checkPermissions
+    */
+    checkPermissions() {
+        if (react_native_1.Platform.OS === 'ios') {
+            return this.commands.checkPermissions();
+        }
+        return {};
+    }
 
-  /**
-   * checkPermissions
-   */
-  public checkPermissions() {
-    return this.commands.checkPermissions();
-  }
+    /**
+    * removeDeliveredNotifications
+    * @param identifiers Array of notification identifiers
+    */
+    removeDeliveredNotifications(identifiers) {
+        if (react_native_1.Platform.OS === 'ios') {
+            return this.commands.removeDeliveredNotifications(identifiers);
+        }
+        return {};
+    }
 
-  /**
-   * removeDeliveredNotifications
-   * @param identifiers Array of notification identifiers
-   */
-  public removeDeliveredNotifications(identifiers: Array<string>) {
-    return this.commands.removeDeliveredNotifications(identifiers);
-  }
+    /**
+    * getDeliveredNotifications
+    */
+    getDeliveredNotifications() {
+        if (react_native_1.Platform.OS === 'ios') {
+            return this.commands.getDeliveredNotifications();
+        }
+        return {};
+    }
 
-  /**
-   * getDeliveredNotifications
-   */
-  public getDeliveredNotifications(): Promise<Notification[]> {
-    return this.commands.getDeliveredNotifications();
-  }
-
-  /**
-   * Obtain the events registry instance
-   */
-  public events(): EventsRegistryIOS {
-    return this.eventsRegistry;
-  }
+    /**
+    * Obtain the events registry instance
+    */
+    events() {
+        if (react_native_1.Platform.OS === 'ios') {
+            return this.eventsRegistry;
+        }
+        return {};
+    }
 }
